@@ -4,18 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
 import sia.tacocloud.domain.Order;
 import sia.tacocloud.domain.Taco;
-import sia.tacocloud.repository.OrderRepository;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
-public class JdbcOrderRepositoryImpl implements OrderRepository {
+public class JdbcOrderRepositoryImpl {
     private SimpleJdbcInsert orderInserter;
     private SimpleJdbcInsert orderTacoInserter;
     private ObjectMapper objectMapper;
@@ -30,7 +27,6 @@ public class JdbcOrderRepositoryImpl implements OrderRepository {
         this.objectMapper = new ObjectMapper();
     }
 
-    @Override
     public Order save(Order order) {
         order.setPlacedAt(new Date());
         long orderId = saveOrderDetails(order);

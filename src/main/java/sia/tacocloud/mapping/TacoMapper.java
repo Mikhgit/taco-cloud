@@ -21,7 +21,7 @@ public abstract class TacoMapper {
     @AfterMapping
     protected void setListIngredients(@MappingTarget Taco to, TacoForm from) {
         List<Ingredient> list = new ArrayList<>();
-        from.getIngredients().forEach(element -> list.add(repository.findOne(element)));
+        from.getIngredients().forEach(element -> list.add(repository.findById(element).get()));
         to.setIngredients(list);
     }
 }

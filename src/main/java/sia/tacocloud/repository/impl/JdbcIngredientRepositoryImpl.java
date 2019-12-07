@@ -2,15 +2,12 @@ package sia.tacocloud.repository.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import sia.tacocloud.domain.Ingredient;
-import sia.tacocloud.repository.IngredientRepository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Repository
-public class JdbcIngredientRepositoryImpl implements IngredientRepository {
+public class JdbcIngredientRepositoryImpl {
     private JdbcTemplate jdbc;
 
     @Autowired
@@ -18,13 +15,11 @@ public class JdbcIngredientRepositoryImpl implements IngredientRepository {
         this.jdbc = jdbc;
     }
 
-    @Override
     public Iterable<Ingredient> findAll() {
         return jdbc.query("select id, name, type from Ingredient",
                 this::mapRowToIngredient);
     }
 
-    @Override
     public Ingredient findOne(String id) {
         return jdbc.queryForObject(
                 "select id, name, type from Ingredient where id=?",
@@ -38,7 +33,6 @@ public class JdbcIngredientRepositoryImpl implements IngredientRepository {
                 Ingredient.Type.valueOf(rs.getString("type")));
     }
 
-    @Override
     public Ingredient save(Ingredient ingredient) {
         jdbc.update(
                 "insert into Ingredient (id, name, type) values (?, ?, ?)",
