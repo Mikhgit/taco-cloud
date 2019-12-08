@@ -4,5 +4,4 @@ import org.springframework.data.repository.CrudRepository;
 import sia.tacocloud.domain.Taco;
 
 public interface TacoRepository extends CrudRepository<Taco, Long> {
-//    Taco save(Taco design);
 }
