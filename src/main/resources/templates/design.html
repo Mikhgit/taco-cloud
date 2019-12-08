@@ -13,6 +13,8 @@
 
 
 <form method="POST" th:object="${taco}">
+    <!--    так как нет атрибута th:action в form, нужно явно указать csrf-->
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
     <!--<span class="validationError"
     th:if="${#fields.hasErrors('ingredients')}"
     th:errors="*{ingredients}">Ingredient Error</span>-->
@@ -69,6 +71,10 @@
 
         <button>Submit your taco</button>
     </div>
+</form>
+<br/>
+<form method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout"/>
 </form>
 </body>
 </html>

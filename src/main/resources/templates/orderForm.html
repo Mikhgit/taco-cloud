@@ -7,6 +7,7 @@
 </head>
 <body>
 <form method="POST" th:action="@{/orders}" th:object="${order}">
+    <!-- атрибут th:action в form есть, можно явно не указывать csrf-->
     <h1>Order your taco creations!</h1>
     <img th:src="@{/images/TacoCloud.png}"/>
     <a th:href="@{/design}" id="another">Design another taco</a><br/>
@@ -66,6 +67,10 @@
           th:errors="*{ccCVV}">ccCVV Error</span>
     <br/>
     <input type="submit" value="Submit order"/>
+</form>
+<br/>
+<form method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout"/>
 </form>
 </body>
 </html>
