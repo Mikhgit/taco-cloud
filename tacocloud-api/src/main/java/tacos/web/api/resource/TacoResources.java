@@ -1,4 +1,4 @@
-package tacos.web.api;
+package tacos.web.api.resource;
 
 import java.util.List;
 

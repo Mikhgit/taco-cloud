@@ -1,4 +1,4 @@
-package tacos.web.api;
+package tacos.web.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import tacos.Taco;
 @Configuration
 public class SpringDataRestConfiguration {
 
-  @Bean
+/*  @Bean
   public ResourceProcessor<PagedResources<Resource<Taco>>>
     tacoProcessor(EntityLinks links) {
 
@@ -27,6 +27,6 @@ public class SpringDataRestConfiguration {
         return resource;
       }
     };
-  }
+  }*/
   
 }

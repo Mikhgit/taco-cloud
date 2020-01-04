@@ -1,4 +1,4 @@
-package tacos.web.api;
+package tacos.web.api.resource;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import tacos.Taco;
 @Relation(value="taco", collectionRelation="tacos")
 public class TacoResource extends ResourceSupport {
 
-  private static final IngredientResourceAssembler 
+  private static final IngredientResourceAssembler
             ingredientAssembler = new IngredientResourceAssembler();
   
   @Getter
