@@ -1,35 +1,36 @@
 package tacos.security.service;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.
-                                              UserDetailsService;
+        UserDetailsService;
 import org.springframework.security.core.userdetails.
-                                       UsernameNotFoundException;
+        UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import tacos.User;
 import tacos.data.UserRepository;
 
 @Service
-public class UserRepositoryUserDetailsService 
+public class UserRepositoryUserDetailsService
         implements UserDetailsService {
 
-  private UserRepository userRepo;
+    private UserRepository userRepo;
 
-  @Autowired
-  public UserRepositoryUserDetailsService(UserRepository userRepo) {
-    this.userRepo = userRepo;
-  }
-  
-  @Override
-  public UserDetails loadUserByUsername(String username)
-      throws UsernameNotFoundException {
-    User user = userRepo.findByUsername(username);
-    if (user != null) {
-      return user;
+    @Autowired
+    public UserRepositoryUserDetailsService(UserRepository userRepo) {
+        this.userRepo = userRepo;
     }
-    throw new UsernameNotFoundException(
-                    "User '" + username + "' not found");
-  }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // TODO: Replace with reactive equivalent instead of blocking
+        User user = userRepo.findByUsername(username).block();
+        if (user != null) {
+            return user;
+        }
+        throw new UsernameNotFoundException(
+                "User '" + username + "' not found");
+    }
 
 }

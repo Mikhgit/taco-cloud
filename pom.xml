@@ -5,7 +5,7 @@
 
     <groupId>sia</groupId>
     <artifactId>taco-cloud-parent</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <version>0.0.11-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -32,6 +32,7 @@
         <module>tacocloud-kitchen</module>
         <module>tacocloud-messaging-rabbitmq</module>
         <module>tacocloud-email</module>
+        <module>tacocloud-restclient</module>
     </modules>
 
 </project>
