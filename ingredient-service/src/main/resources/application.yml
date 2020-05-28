@@ -1,9 +1,8 @@
 server:
   port: 0
 
-spring:
-  application:
-    name: ingredient-service
+management:
+  endpoints.web.exposure.include: '*'
 
 #
 # This sets the location of the Eureka server. The config shown here differs

@@ -1,0 +1,21 @@
+server:
+  port: 8888
+
+spring:
+  profiles:
+    active: vault, git
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://localhost:3000/Mikhgit/tacocloud-config
+          username: Mikhgit
+          password: qwer1234
+        vault:
+          host: localhost
+          port: 8200
+          scheme: http
+          kvVersion: 2
+
+  main:
+    allow-bean-definition-overriding: true
