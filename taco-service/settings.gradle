@@ -1,0 +1,3 @@
+rootProject.name = 'taco-service'
+include 'taco-client'
+include 'taco-dto'
