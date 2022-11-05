@@ -1,1 +1,3 @@
 rootProject.name = 'ingredient-service'
+include 'ingredient-client'
+include 'ingredient-dto'

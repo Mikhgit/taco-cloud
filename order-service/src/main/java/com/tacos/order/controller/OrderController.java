@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(value = "/orders", produces = "application/json")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class OrderController {

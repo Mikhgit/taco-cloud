@@ -72,6 +72,7 @@ subprojects {
 dependencies {
     implementation project(':taco-dto')
 
+    implementation 'com.tacos.client:ingredient-client:0.0.1'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 

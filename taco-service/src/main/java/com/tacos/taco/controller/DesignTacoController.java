@@ -12,14 +12,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(produces = "application/json")
+@RequestMapping(value = "/tacos", produces = "application/json")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class DesignTacoController {
 
     private final TacoService tacoService;
     private final TacoDtoMapper mapper;
-
     @GetMapping("/recent")
     public List<TacoDto> recentTacos() {
         return tacoService.findRecentTacos().stream()
@@ -29,8 +28,8 @@ public class DesignTacoController {
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public TacoEntity createTaco(@RequestBody NewTacoFormDto form) {
-        return tacoService.create(mapper.fromDto(form));
+    public TacoDto createTaco(@RequestBody NewTacoFormDto form) {
+        return mapper.toDto(tacoService.create(mapper.fromDto(form)));
     }
 
     @GetMapping("/{id}")

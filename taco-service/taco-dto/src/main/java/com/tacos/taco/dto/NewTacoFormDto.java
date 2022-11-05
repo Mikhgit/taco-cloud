@@ -9,6 +9,6 @@ import java.util.List;
 @Builder
 public class NewTacoFormDto {
 
-    private String name;
-    private List<String> ingredients;
+    String name;
+    List<String> ingredients;
 }
