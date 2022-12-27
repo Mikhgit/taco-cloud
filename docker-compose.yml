@@ -1,0 +1,66 @@
+# docker-compose.yml
+version: '3.5'
+
+services:
+  taco-service:
+    image: 'taco-service:latest'
+    depends_on:
+      - mongo
+      - registry-service
+    build: ./taco-service
+    container_name: taco
+    environment:
+      - "SPRING_PROFILES_ACTIVE=test"
+
+  ingredient-service:
+    image: 'ingredient-service:latest'
+    depends_on:
+      - mongo
+      - registry-service
+    build: ./ingredient-service
+    container_name: ingredient
+    environment:
+      - "SPRING_PROFILES_ACTIVE=test"
+
+  order-service:
+    image: 'order-service:latest'
+    depends_on:
+      - mongo
+      - registry-service
+    build: ./order-service
+    container_name: order
+    environment:
+      - "SPRING_PROFILES_ACTIVE=test"
+
+  registry-service:
+    image: 'registry-service:latest'
+    hostname: registry-service
+    build: ./registry-service
+    container_name: registry
+    ports:
+      - "8761:8761"
+
+  api-gateway:
+    image: 'api-gateway:latest'
+    depends_on:
+      - registry-service
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=test"
+
+
+  # Database tier
+  mongo:
+    image: 'mongo:6.0.2-focal'
+    container_name: "mongo"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db # ensures data persistence between restarting
+    ports:
+      - "27017:27017"
+    command: mongod --logpath=/dev/null

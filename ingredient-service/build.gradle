@@ -23,6 +23,7 @@ ext {
 
 allprojects {
     apply plugin: 'java'
+    apply plugin: 'java-library'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
@@ -43,21 +44,25 @@ allprojects {
         }
     }
 
+    jar {
+        enabled = false
+        manifest {
+            attributes(
+                    'Main-Class': 'com.tacos.ingredient.IngredientServiceApplication'
+            )
+        }
+    }
+
     test {
         useJUnitPlatform()
     }
 }
 
 subprojects {
-    apply plugin: 'java-library'
     apply plugin: 'maven-publish'
 
     bootJar {
         enabled = false
-    }
-
-    jar {
-        enabled = true
     }
 
     publishing {
@@ -98,8 +103,4 @@ dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
-}
-
-test {
-    useJUnitPlatform()
 }

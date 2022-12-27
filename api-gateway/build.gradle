@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.8.RELEASE'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'java-library'
 }
 
 group = 'com.tacos'
@@ -14,6 +15,15 @@ repositories {
 
 ext {
     set('springCloudVersion', "Hoxton.SR9")
+}
+
+jar {
+    enabled = false
+    manifest {
+        attributes(
+                'Main-Class': 'com.tacos.apigateway.ApiGatewayApplication'
+        )
+    }
 }
 
 dependencies {

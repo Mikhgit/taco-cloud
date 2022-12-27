@@ -23,6 +23,7 @@ ext {
 
 allprojects {
     apply plugin: 'java'
+    apply plugin: 'java-library'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
@@ -43,21 +44,25 @@ allprojects {
         }
     }
 
+    jar {
+        enabled = false
+        manifest {
+            attributes(
+                    'Main-Class': 'com.tacos.order.OrderServiceApplication'
+            )
+        }
+    }
+
     test {
         useJUnitPlatform()
     }
 }
 
 subprojects {
-    apply plugin: 'java-library'
     apply plugin: 'maven-publish'
 
     bootJar {
         enabled = false
-    }
-
-    jar {
-        enabled = true
     }
 
     publishing {
@@ -85,8 +90,4 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo'
-}
-
-test {
-    useJUnitPlatform()
 }

@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Configuration;
 
 import com.tacos.ingredient.domain.IngredientEntity.Type;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 @Configuration
 public class DevelopmentConfig {
 
     @Bean
     public CommandLineRunner dataLoader(IngredientRepository repo) {
+        repo.deleteAll();
         return args -> {
             repo.save(new IngredientEntity("FLTO", "Flour Tortilla", Type.WRAP));
             repo.save(new IngredientEntity("COTO", "Corn Tortilla", Type.WRAP));
