@@ -64,3 +64,14 @@ services:
     ports:
       - "27017:27017"
     command: mongod --logpath=/dev/null
+
+  keycloak:
+    image: 'jboss/keycloak:16.1.1'
+    container_name: "keycloak"
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    volumes:
+      - ./:/temp
+    ports:
+      - "8085:8080"

@@ -9,10 +9,10 @@
 <group-box title="Sign in">
   <form>
     <label for="username"><b>Username:</b></label><br/>
-    <input type="text" name="username" class="formField"/><br/>
+    <input type="text" [(ngModel)]="model.username" name="username" class="formField"/><br/>
     <label for="password"><b>Password:</b></label><br/>
-    <input type="password" name="password" class="formField"/><br/><br/>
-    <big-button label="Sign in"></big-button>
+    <input type="password" [(ngModel)]="model.password" name="password" class="formField"/><br/><br/>
+    <big-button label="Sign in" (click)="login()"></big-button>
   </form>
 </group-box>
 

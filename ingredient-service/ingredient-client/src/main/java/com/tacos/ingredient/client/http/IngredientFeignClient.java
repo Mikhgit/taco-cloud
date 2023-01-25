@@ -1,5 +1,6 @@
 package com.tacos.ingredient.client.http;
 
+import com.tacos.ingredient.client.http.security.OAuthFeignConfig;
 import com.tacos.ingredient.dto.IngredientDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,8 @@ import java.util.List;
 
 @FeignClient(
         value = "ingredient-service",
-        path = "/ingredients"
+        path = "/ingredients",
+        configuration = OAuthFeignConfig.class
 )
 public interface IngredientFeignClient {
 

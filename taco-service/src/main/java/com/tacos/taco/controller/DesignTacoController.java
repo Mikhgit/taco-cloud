@@ -1,7 +1,6 @@
 package com.tacos.taco.controller;
 
 import com.tacos.taco.controller.mapper.TacoDtoMapper;
-import com.tacos.taco.domain.TacoEntity;
 import com.tacos.taco.dto.NewTacoFormDto;
 import com.tacos.taco.dto.TacoDto;
 import com.tacos.taco.service.TacoService;
