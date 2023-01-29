@@ -7,30 +7,27 @@ services:
     depends_on:
       - mongo
       - registry-service
+      - keycloak
     build: ./taco-service
     container_name: taco
-    environment:
-      - "SPRING_PROFILES_ACTIVE=test"
 
   ingredient-service:
     image: 'ingredient-service:latest'
     depends_on:
       - mongo
       - registry-service
+      - keycloak
     build: ./ingredient-service
     container_name: ingredient
-    environment:
-      - "SPRING_PROFILES_ACTIVE=test"
 
   order-service:
     image: 'order-service:latest'
     depends_on:
       - mongo
       - registry-service
+      - keycloak
     build: ./order-service
     container_name: order
-    environment:
-      - "SPRING_PROFILES_ACTIVE=test"
 
   registry-service:
     image: 'registry-service:latest'
@@ -48,9 +45,6 @@ services:
     container_name: api-gateway
     ports:
       - "8080:8080"
-    environment:
-      - "SPRING_PROFILES_ACTIVE=test"
-
 
   # Database tier
   mongo:
@@ -71,7 +65,18 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+      DB_VENDOR: h2
+    command: ["-Djboss.http.port=8085"]
     volumes:
-      - ./:/temp
+      - ./data/keycloak/:/temp
     ports:
-      - "8085:8080"
+      - "8085:8085"
+
+  taco-ui:
+    image: 'taco-ui:latest'
+    depends_on:
+      - keycloak
+    build: ./taco-ui
+    container_name: taco-ui
+    ports:
+      - "4200:80"

@@ -4,7 +4,7 @@ import { AuthConfig } from 'angular-oauth2-oidc';
 export const authConfig: AuthConfig = {
 
   // Url of the Identity Provider
-  issuer: 'http://localhost:8085/auth/realms/taco-realm',
+  issuer: 'http://keycloak:8085/auth/realms/taco-realm',
 
   // URL of the SPA to redirect the user to after login
   redirectUri: window.location.origin + '/index.html',
@@ -20,5 +20,6 @@ export const authConfig: AuthConfig = {
 
   showDebugInformation: true,
 
-  sessionChecksEnabled: true
+  sessionChecksEnabled: true,
+  requireHttps: false // todo: replace in only dev scope
 };

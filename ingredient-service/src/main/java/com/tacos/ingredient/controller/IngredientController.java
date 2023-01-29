@@ -2,7 +2,6 @@ package com.tacos.ingredient.controller;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.tacos.ingredient.controller.mapper.IngredientDtoMapper;
@@ -10,7 +9,6 @@ import com.tacos.ingredient.dto.IngredientDto;
 import com.tacos.ingredient.repository.IngredientRepository;
 import com.tacos.ingredient.domain.IngredientEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
