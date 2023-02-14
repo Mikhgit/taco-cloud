@@ -13,5 +13,4 @@ public class Ingredient implements Serializable {
     public enum Type {
         WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
     }
-
 }

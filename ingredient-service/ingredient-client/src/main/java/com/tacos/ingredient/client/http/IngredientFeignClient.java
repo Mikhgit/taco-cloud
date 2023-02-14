@@ -11,6 +11,7 @@ import java.util.List;
 @FeignClient(
         value = "ingredient-service",
         path = "/ingredients",
+        url = "${taco.ingredient-service.url}",
         configuration = OAuthFeignConfig.class
 )
 public interface IngredientFeignClient {

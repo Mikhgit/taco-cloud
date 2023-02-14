@@ -1,8 +1,9 @@
 group = 'com.tacos.client'
-version = '0.0.1'
+version = '0.0.2'
 
 dependencies {
     api project(':taco-dto')
     api 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    api 'org.springframework.security:spring-security-oauth2-client'
     api 'org.springframework.boot:spring-boot-starter'
 }

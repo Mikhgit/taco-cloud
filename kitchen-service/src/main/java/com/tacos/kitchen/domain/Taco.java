@@ -14,5 +14,4 @@ public class Taco implements Serializable {
     private Date createdAt;
 
     private List<Ingredient> ingredients;
-
 }

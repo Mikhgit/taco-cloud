@@ -26,8 +26,21 @@ services:
       - mongo
       - registry-service
       - keycloak
+      - rabbitmq
     build: ./order-service
     container_name: order
+
+  kitchen-service:
+    image: 'kitchen-service:latest'
+    depends_on:
+      - mongo
+      - registry-service
+      - keycloak
+      - rabbitmq
+    build: ./kitchen-service
+    container_name: kitchen
+    ports:
+      - "8081:8080"
 
   registry-service:
     image: 'registry-service:latest'
@@ -71,6 +84,15 @@ services:
       - ./data/keycloak/:/temp
     ports:
       - "8085:8085"
+
+  rabbitmq:
+    image: 'rabbitmq:3.9.27-management-alpine'
+    container_name: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./data/rabbitmq_data:/data'
 
   taco-ui:
     image: 'taco-ui:latest'

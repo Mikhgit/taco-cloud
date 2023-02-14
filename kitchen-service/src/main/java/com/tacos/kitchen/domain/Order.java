@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class Order implements Serializable {
 
-    private Long id;
+    private String id;
     private Date placedAt;
     private String deliveryName;
     private String deliveryStreet;
@@ -20,5 +20,4 @@ public class Order implements Serializable {
     private String ccExpiration;
     private String ccCVV;
     private List<Taco> tacos;
-
 }

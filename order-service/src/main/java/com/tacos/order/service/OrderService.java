@@ -1,7 +1,7 @@
 package com.tacos.order.service;
 
+import com.tacos.order.client.OrderAmqpClient;
 import com.tacos.order.domain.OrderEntity;
-import com.tacos.order.gateway.OrderGateway;
 import com.tacos.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final OrderGateway orderMessages;
+    private final OrderAmqpClient orderAmqpClient;
     private final OrderRepository repo;
     private final OrderMapper orderMapper;
 
@@ -22,7 +22,7 @@ public class OrderService {
 
     public OrderEntity create(NewOrderForm form) {
         OrderEntity orderEntity = repo.save(orderMapper.toOrderEntity(form));
-        orderMessages.sendOrder(orderEntity);
+        orderAmqpClient.orderCreated(orderEntity);
         return orderEntity;
     }
 
@@ -30,6 +30,7 @@ public class OrderService {
         return repo.save(order);
     }
 
+    //todo создать утилитный метод для частичного обновления обектов
     public OrderEntity patch(String orderId,OrderEntity patch) {
         return repo.findById(orderId)
                 .map(order -> {

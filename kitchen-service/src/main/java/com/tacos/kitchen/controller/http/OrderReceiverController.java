@@ -1,4 +1,4 @@
-package com.tacos.kitchen.controller;
+package com.tacos.kitchen.controller.http;
 
 import com.tacos.kitchen.domain.Order;
 import com.tacos.kitchen.service.OrderReceiver;

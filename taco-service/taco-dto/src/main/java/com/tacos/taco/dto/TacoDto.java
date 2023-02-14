@@ -13,5 +13,5 @@ public class TacoDto {
     String id;
     String name;
     Date createdAt;
-    List<IngredientDto> ingredients;
+    List<String> ingredients;
 }

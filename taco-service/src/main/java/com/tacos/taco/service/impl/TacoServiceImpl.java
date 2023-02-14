@@ -1,6 +1,5 @@
 package com.tacos.taco.service.impl;
 
-import com.tacos.ingredient.client.http.IngredientFeignClient;
 import com.tacos.taco.domain.TacoEntity;
 import com.tacos.taco.repository.TacoRepository;
 import com.tacos.taco.service.NewTacoForm;

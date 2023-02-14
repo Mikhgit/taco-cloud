@@ -9,3 +9,8 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://registry-service:8761/eureka/}
+# ensure correct connection instance to service via feign client inside docker
+# by specify url property as service name.
+# For example: url=http://taco-service
+  instance:
+    prefer-ip-address: true

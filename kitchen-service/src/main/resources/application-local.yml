@@ -1,0 +1,17 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+    ip-address: host.docker.internal
+
+
+taco:
+  ingredient-service:
+    url: http://localhost:8080
+  taco-service:
+    url: http://localhost:8080
+
+server:
+  port: 8081

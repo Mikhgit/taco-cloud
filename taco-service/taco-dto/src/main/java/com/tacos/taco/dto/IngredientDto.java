@@ -5,6 +5,7 @@ import lombok.Value;
 
 @Value
 @Builder
+//todo delete
 public class IngredientDto {
 
     String id;
