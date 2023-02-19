@@ -5,10 +5,14 @@ import com.tacos.taco.repository.TacoRepository;
 import com.tacos.taco.service.NewTacoForm;
 import com.tacos.taco.service.TacoService;
 import lombok.RequiredArgsConstructor;
+import org.reactivestreams.Publisher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -16,23 +20,26 @@ import java.util.List;
 public class TacoServiceImpl implements TacoService {
 
     private final TacoRepository tacoRepository;
+
     @Override
-    public TacoEntity getById(String id) {
-        return tacoRepository.findById(id).orElseThrow();
+    public Mono<TacoEntity> getById(String id) {
+        return tacoRepository.findById(id);
     }
 
     @Override
-    public List<TacoEntity> findRecentTacos() {
-        PageRequest page = PageRequest.of(0, 12, Sort.by("createdAt").descending());
-        return tacoRepository.findAll(page).getContent();
+    public Flux<TacoEntity> findRecentTacos() {
+        return tacoRepository.findAll()
+                .take(12)
+                .sort(Comparator.comparing(TacoEntity::getCreatedAt));
     }
 
     @Override
-    public TacoEntity create(NewTacoForm form) {
-        TacoEntity taco = TacoEntity.builder()
-                .name(form.getName())
-                .ingredients(form.getIngredients())
-                .build();
-        return tacoRepository.save(taco);
+    public Mono<TacoEntity> create(NewTacoForm form) {
+        return Mono.just(form)
+                .map(newTaco -> TacoEntity.builder()
+                        .name(newTaco.getName())
+                        .ingredients(newTaco.getIngredients())
+                        .build())
+                .flatMap(tacoRepository::save);
     }
 }

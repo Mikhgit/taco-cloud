@@ -1,14 +1,17 @@
 package com.tacos.taco.service;
 
 import com.tacos.taco.domain.TacoEntity;
+import org.reactivestreams.Publisher;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 public interface TacoService {
 
-    TacoEntity getById(String id);
+    Mono<TacoEntity> getById(String id);
 
-    List<TacoEntity> findRecentTacos();
+    Flux<TacoEntity> findRecentTacos();
 
-    TacoEntity create(NewTacoForm form);
+    Mono<TacoEntity> create(NewTacoForm form);
 }

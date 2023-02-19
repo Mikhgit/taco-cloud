@@ -7,6 +7,9 @@ import com.tacos.taco.service.TacoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,20 +23,22 @@ public class DesignTacoController {
     private final TacoDtoMapper mapper;
 
     @GetMapping("/recent")
-    public List<TacoDto> recentTacos() {
-        return tacoService.findRecentTacos().stream()
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
+    public Flux<TacoDto> recentTacos() {
+        return tacoService.findRecentTacos()
+                .map(mapper::toDto);
     }
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public TacoDto createTaco(@RequestBody NewTacoFormDto form) {
-        return mapper.toDto(tacoService.create(mapper.fromDto(form)));
+    public Mono<TacoDto> createTaco(@RequestBody NewTacoFormDto form) {
+        return Mono.fromSupplier(() -> mapper.fromDto(form))
+                .flatMap(tacoService::create)
+                .map(mapper::toDto);
     }
 
     @GetMapping("/{id}")
-    public TacoDto tacoById(@PathVariable("id") String id) {
-        return mapper.toDto(tacoService.getById(id));
+    public Mono<TacoDto> tacoById(@PathVariable("id") String id) {
+        return tacoService.getById(id)
+                .map(mapper::toDto);
     }
 }
