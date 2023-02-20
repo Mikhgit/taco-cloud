@@ -81,8 +81,9 @@ subprojects {
 dependencies {
     implementation project(':order-dto')
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-    implementation 'org.springframework.cloud:spring-cloud-starter'
     implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'

@@ -1,6 +1,9 @@
 # docker-compose.yml
 version: '3.5'
 
+x-common-variables: &common-variables
+  SPRING_CLOUD_CONFIG_TOKEN: hvs.EYBi3HI5sIVO2leRDkp25hyr
+
 services:
   taco-service:
     image: 'taco-service:latest'
@@ -10,6 +13,8 @@ services:
       - keycloak
     build: ./taco-service
     container_name: taco
+    environment: 
+      *common-variables
 
   ingredient-service:
     image: 'ingredient-service:latest'
@@ -19,6 +24,8 @@ services:
       - keycloak
     build: ./ingredient-service
     container_name: ingredient
+    environment:
+      *common-variables
 
   order-service:
     image: 'order-service:latest'
@@ -29,6 +36,8 @@ services:
       - rabbitmq
     build: ./order-service
     container_name: order
+    environment:
+      *common-variables
 
   kitchen-service:
     image: 'kitchen-service:latest'
@@ -39,6 +48,8 @@ services:
       - rabbitmq
     build: ./kitchen-service
     container_name: kitchen
+    environment:
+      *common-variables
     ports:
       - "8081:8080"
 
@@ -50,12 +61,22 @@ services:
     ports:
       - "8761:8761"
 
+  config-server:
+    image: 'config-server:latest'
+    hostname: config-server
+    build: ./config-server
+    container_name: config-server
+    ports:
+      - "8888:8888"
+
   api-gateway:
     image: 'api-gateway:latest'
     depends_on:
       - registry-service
     build: ./api-gateway
     container_name: api-gateway
+    environment:
+      *common-variables
     ports:
       - "8080:8080"
 
@@ -93,6 +114,20 @@ services:
       - "15672:15672"
     volumes:
       - ./data/rabbitmq_data:/data'
+
+  vault:
+    image: 'vault:1.12.3'
+    container_name: "vault"
+    environment:
+      VAULT_ADDR: "http://0.0.0.0:8200"
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - "8200:8200"
+    volumes:
+      - ./data/vault:/vault/file:rw
+      - ./:/vault/config:rw
+    entrypoint: vault server -config=/vault/config/vault.json
 
   taco-ui:
     image: 'taco-ui:latest'
