@@ -53,6 +53,18 @@ services:
     ports:
       - "8081:8080"
 
+  boot-admin-server:
+    image: 'boot-admin-server:latest'
+    depends_on:
+      - registry-service
+    hostname: boot-admin-server
+    build: ./boot-admin-server
+    container_name: boot-admin
+    environment:
+      *common-variables
+    ports:
+      - "9090:9090"
+
   registry-service:
     image: 'registry-service:latest'
     hostname: registry-service
