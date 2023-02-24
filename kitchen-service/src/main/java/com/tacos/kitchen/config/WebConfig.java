@@ -1,4 +1,4 @@
-package com.tacos.kitchen;
+package com.tacos.kitchen.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

@@ -1,0 +1,16 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            authorization-grant-type: authorization_code
+            client-id: kitchen-service
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+        provider:
+          keycloak:
+            token-uri: http://keycloak:8085/auth/realms/taco-realm/protocol/openid-connect/token
+            authorization-uri: http://keycloak:8085/auth/realms/taco-realm/protocol/openid-connect/auth
+            user-info-uri: http://keycloak:8085/auth/realms/taco-realm/protocol/openid-connect/userinfo
+            jwk-set-uri: http://keycloak:8085/auth/realms/taco-realm/protocol/openid-connect/certs
+            user-name-attribute: preferred_username
