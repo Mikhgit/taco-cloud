@@ -3,6 +3,8 @@ package com.tacos.taco.client.http.security;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
@@ -10,6 +12,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
@@ -17,13 +20,11 @@ import static java.util.Objects.isNull;
 public class OAuthClientCredentialsFeignManager {
 
     private final OAuth2AuthorizedClientManager manager;
-    private final Authentication principal;
     private final ClientRegistration clientRegistration;
 
     public OAuthClientCredentialsFeignManager(OAuth2AuthorizedClientManager manager, ClientRegistration clientRegistration) {
         this.manager = manager;
         this.clientRegistration = clientRegistration;
-        this.principal = createPrincipal();
     }
 
     private Authentication createPrincipal() {
@@ -66,6 +67,9 @@ public class OAuthClientCredentialsFeignManager {
 
     public String getAccessToken() {
         try {
+            Authentication principal = Optional.of(SecurityContextHolder.getContext())
+                    .map(SecurityContext::getAuthentication)
+                    .orElse(createPrincipal());
             OAuth2AuthorizeRequest oAuth2AuthorizeRequest = OAuth2AuthorizeRequest
                     .withClientRegistrationId(clientRegistration.getRegistrationId())
                     .principal(principal)

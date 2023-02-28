@@ -37,8 +37,8 @@ jar {
 }
 
 dependencies {
-    implementation 'com.tacos.client:taco-client:0.0.2'
-    implementation 'com.tacos.client:ingredient-client:0.0.2'
+    implementation 'com.tacos.client:taco-client:0.0.3'
+    implementation 'com.tacos.client:ingredient-client:0.0.3'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
