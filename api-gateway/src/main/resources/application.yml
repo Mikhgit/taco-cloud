@@ -9,3 +9,27 @@ spring:
             allowed-origins: "*"
             allowed-methods: "*"
             allowed-headers: "*"
+      routes:
+        - id: taco-service
+          uri: lb://TACO-SERVICE
+          predicates:
+            - Path=/tacos/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/tacos/(?<path>.*), /$\{path}
+
+        - id: ingredient-service
+          uri: lb://INGREDIENT-SERVICE
+          predicates:
+            - Path=/ingredients/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/ingredients/(?<path>.*), /$\{path}
+
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/orders/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/orders/(?<path>.*), /$\{path}

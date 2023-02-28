@@ -94,6 +94,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-integration'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.14'
+
     implementation "org.mapstruct:mapstruct:${mapStructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
     testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"

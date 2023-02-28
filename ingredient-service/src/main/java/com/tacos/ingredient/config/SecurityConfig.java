@@ -15,7 +15,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
+                .authorizeRequests(authorize -> authorize
+                        .antMatchers("/api/auth/**", "/swagger-ui-custom.html", "/swagger-ui.html",
+                                "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**",
+                                "/swagger-ui/index.html", "/api-docs/**").permitAll()
+                        .anyRequest().authenticated())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .cors().disable();
         http.csrf().disable();

@@ -12,13 +12,18 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
-@EnableWebFluxSecurity
-@EnableGlobalMethodSecurity(jsr250Enabled = true)
+@EnableWebFluxSecurity //Applies the configuration to the global WebSecurity
+@EnableGlobalMethodSecurity(jsr250Enabled = true) //Enables @RoleAllowed
 public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        http.authorizeExchange(exchanges -> exchanges.anyExchange().authenticated())
+        http.authorizeExchange(exchanges -> exchanges
+                        //                .pathMatchers("/actuator/**").hasRole("ADMIN")
+                        .pathMatchers("/api/auth/**", "/swagger-ui-custom.html", "/swagger-ui.html",
+                                "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**",
+                                "/swagger-ui/index.html", "/api-docs/**").permitAll()
+                        .anyExchange().authenticated())
                 .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::jwt)
                 .cors().disable();
         return http.csrf().disable().build();
