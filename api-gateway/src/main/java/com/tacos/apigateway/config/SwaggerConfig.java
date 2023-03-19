@@ -1,4 +1,4 @@
-package com.tacos.apigateway;
+package com.tacos.apigateway.config;
 
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Configuration;

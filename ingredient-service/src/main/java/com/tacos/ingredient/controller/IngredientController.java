@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/ingredients", produces = "application/json")
+@RequestMapping(path = "/ingredients")
 @RequiredArgsConstructor
 public class IngredientController {
 

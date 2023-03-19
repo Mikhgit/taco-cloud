@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
-@RequestMapping(value = "/tacos", produces = "application/json")
+@RequestMapping(path = "/tacos")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class DesignTacoController {
@@ -28,7 +25,7 @@ public class DesignTacoController {
                 .map(mapper::toDto);
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<TacoDto> createTaco(@RequestBody NewTacoFormDto form) {
         return Mono.fromSupplier(() -> mapper.fromDto(form))

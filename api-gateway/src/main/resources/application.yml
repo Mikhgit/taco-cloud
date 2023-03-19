@@ -1,4 +1,8 @@
 spring:
+  sleuth:
+    reactor:
+      # decorate_on_last might lead to medium performance degradation.
+      instrumentation-type: decorate_on_last
   cloud:
     gateway:
       default-filters:
@@ -16,7 +20,6 @@ spring:
             - Path=/tacos/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/tacos/(?<path>.*), /$\{path}
 
         - id: ingredient-service
           uri: lb://INGREDIENT-SERVICE
@@ -24,7 +27,6 @@ spring:
             - Path=/ingredients/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/ingredients/(?<path>.*), /$\{path}
 
         - id: order-service
           uri: lb://ORDER-SERVICE
@@ -32,4 +34,3 @@ spring:
             - Path=/orders/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/orders/(?<path>.*), /$\{path}

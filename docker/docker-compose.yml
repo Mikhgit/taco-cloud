@@ -11,7 +11,7 @@ services:
       - mongo
       - registry-service
       - keycloak
-    build: ./taco-service
+    build: ../taco-service
     container_name: taco
     environment: 
       *common-variables
@@ -22,7 +22,7 @@ services:
       - mongo
       - registry-service
       - keycloak
-    build: ./ingredient-service
+    build: ../ingredient-service
     container_name: ingredient
     environment:
       *common-variables
@@ -34,7 +34,7 @@ services:
       - registry-service
       - keycloak
       - rabbitmq
-    build: ./order-service
+    build: ../order-service
     container_name: order
     environment:
       *common-variables
@@ -46,7 +46,7 @@ services:
       - registry-service
       - keycloak
       - rabbitmq
-    build: ./kitchen-service
+    build: ../kitchen-service
     container_name: kitchen
     environment:
       *common-variables
@@ -58,7 +58,7 @@ services:
     depends_on:
       - registry-service
     hostname: boot-admin-server
-    build: ./boot-admin-server
+    build: ../boot-admin-server
     container_name: boot-admin
     environment:
       *common-variables
@@ -68,7 +68,7 @@ services:
   registry-service:
     image: 'registry-service:latest'
     hostname: registry-service
-    build: ./registry-service
+    build: ../registry-service
     container_name: registry
     ports:
       - "8761:8761"
@@ -76,7 +76,7 @@ services:
   config-server:
     image: 'config-server:latest'
     hostname: config-server
-    build: ./config-server
+    build: ../config-server
     container_name: config-server
     ports:
       - "8888:8888"
@@ -85,7 +85,7 @@ services:
     image: 'api-gateway:latest'
     depends_on:
       - registry-service
-    build: ./api-gateway
+    build: ../api-gateway
     container_name: api-gateway
     environment:
       *common-variables
@@ -138,14 +138,56 @@ services:
       - "8200:8200"
     volumes:
       - ./data/vault:/vault/file:rw
-      - ./:/vault/config:rw
+      - ./config:/vault/config:rw
     entrypoint: vault server -config=/vault/config/vault.json
+
+  elasticsearch:
+    image: 'elasticsearch:7.7.0'
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  kibana:
+    image: 'kibana:7.7.0'
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: "http://elasticsearch:9300"
+    ports:
+      - "5601:5601"
+
+  logstash:
+    image: 'logstash:7.7.0'
+    container_name: logstash
+    command: logstash -f /usr/share/logstash/pipeline/logstash.conf
+    volumes:
+      - ./config:/usr/share/logstash/pipeline
+    ports:
+      - "9600:9600"
+
+  zipkin:
+    image: 'openzipkin/zipkin:2'
+    container_name: zipkin
+    depends_on:
+      - elasticsearch
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - "ES_HOSTS=elasticsearch:9200"
+    ports:
+      - "9411:9411"
 
   taco-ui:
     image: 'taco-ui:latest'
     depends_on:
       - keycloak
-    build: ./taco-ui
+    build: ../taco-ui
     container_name: taco-ui
     ports:
       - "4200:80"
