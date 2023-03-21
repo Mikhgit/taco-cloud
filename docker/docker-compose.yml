@@ -63,7 +63,7 @@ services:
     environment:
       *common-variables
     ports:
-      - "9090:9090"
+      - "9000:9000"
 
   registry-service:
     image: 'registry-service:latest'
@@ -113,8 +113,6 @@ services:
       KEYCLOAK_PASSWORD: admin
       DB_VENDOR: h2
     command: ["-Djboss.http.port=8085"]
-    volumes:
-      - ./data/keycloak/:/temp
     ports:
       - "8085:8085"
 
@@ -124,8 +122,6 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-    volumes:
-      - ./data/rabbitmq_data:/data'
 
   vault:
     image: 'vault:1.12.3'
@@ -182,6 +178,23 @@ services:
       - "ES_HOSTS=elasticsearch:9200"
     ports:
       - "9411:9411"
+
+  prometheus:
+    image: prom/prometheus:v2.42.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: "grafana/grafana:9.4.3"
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=root
+      - GF_SECURITY_ADMIN_PASSWORD=root
+    ports:
+      - "3000:3000"
 
   taco-ui:
     image: 'taco-ui:latest'

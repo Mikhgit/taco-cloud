@@ -54,6 +54,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation 'net.logstash.logback:logstash-logback-encoder:7.2'
+    implementation 'io.micrometer:micrometer-registry-prometheus:1.10.4'
+    implementation 'io.micrometer:micrometer-core:1.10.4'
 
     implementation "org.mapstruct:mapstruct:${mapStructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"

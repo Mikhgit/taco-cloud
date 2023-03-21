@@ -20,6 +20,7 @@ spring:
             - Path=/tacos/**
           filters:
             - RemoveRequestHeader=Cookie
+            - RewritePath=/tacos/v3/api-docs, /v3/api-docs
 
         - id: ingredient-service
           uri: lb://INGREDIENT-SERVICE
@@ -27,6 +28,7 @@ spring:
             - Path=/ingredients/**
           filters:
             - RemoveRequestHeader=Cookie
+            - RewritePath=/ingredients/v3/api-docs, /v3/api-docs
 
         - id: order-service
           uri: lb://ORDER-SERVICE
@@ -34,3 +36,4 @@ spring:
             - Path=/orders/**
           filters:
             - RemoveRequestHeader=Cookie
+            - RewritePath=/orders/v3/api-docs, /v3/api-docs
