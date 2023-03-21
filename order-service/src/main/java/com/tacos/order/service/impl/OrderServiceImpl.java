@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
         return repo.save(order);
     }
 
-    //todo создать утилитный метод для частичного обновления обектов
+    //todo create a utility method to partially update objects
     @Override
     public OrderEntity patch(String orderId, OrderEntity patch) {
         return repo.findById(orderId)
