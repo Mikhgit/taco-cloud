@@ -3,12 +3,15 @@ spring:
     oauth2:
       client:
         registration:
-          keycloak:
+          keycloak-authorization-code:
             authorization-grant-type: authorization_code
             client-id: kitchen-service
             redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
-        provider:
           keycloak:
+            authorization-grant-type: client_credentials
+            client-id: kitchen-service
+        provider:
+          keycloak-authorization-code:
             token-uri: http://keycloak:8085/auth/realms/taco-realm/protocol/openid-connect/token
             authorization-uri: http://keycloak:8085/auth/realms/taco-realm/protocol/openid-connect/auth
             user-info-uri: http://keycloak:8085/auth/realms/taco-realm/protocol/openid-connect/userinfo
